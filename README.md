@@ -4,6 +4,8 @@ A three-dot "waiting" indicator for .NET MAUI — each dot pulses opacity and
 scale on a 1.2s loop, staggered 150ms apart, giving a soft breathing effect
 instead of a spinner.
 
+![PulsingDots demo](demo.gif)
+
 This repo is **just a sample app**, not a library. `PulsingDots` doesn't need
 to be one: it's built entirely from `Shape` (`Ellipse`) and MAUI's built-in
 `Animation`/`Commit` API — no custom `Handler`, no `Platforms/` folder, no

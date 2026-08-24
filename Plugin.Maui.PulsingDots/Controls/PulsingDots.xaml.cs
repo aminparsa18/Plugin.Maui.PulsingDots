@@ -31,19 +31,46 @@ public partial class PulsingDots : ContentView
     }
 
     private CancellationTokenSource? _cts;
+    private bool _isLoaded;
 
     public PulsingDots()
     {
         InitializeComponent();
+        Loaded += OnLoaded;
+        Unloaded += OnUnloaded;
+    }
+
+    // Setting IsRunning="True" in XAML fires this during the page's constructor, before the
+    // control has a Handler/native surface. Starting the Animation/Commit loop that early makes
+    // the platform ticker "catch up" once the Handler attaches, which shows up as the dots
+    // jumping straight to full opacity/scale instead of pulsing smoothly. So we only ever start
+    // the loop once the control is actually Loaded, and stop it on Unloaded to avoid leaking a
+    // running animation for an off-screen view.
+    private void OnLoaded(object? sender, EventArgs e)
+    {
+        _isLoaded = true;
+        if (IsRunning)
+            Start();
+    }
+
+    private void OnUnloaded(object? sender, EventArgs e)
+    {
+        _isLoaded = false;
+        Stop();
     }
 
     private static void OnIsRunningChanged(BindableObject bindable, object oldValue, object newValue)
     {
         var view = (PulsingDots)bindable;
         if ((bool)newValue)
-            view.Start();
+        {
+            if (view._isLoaded)
+                view.Start();
+        }
         else
+        {
             view.Stop();
+        }
     }
 
     private void Start()
