@@ -367,6 +367,9 @@ MigrationBackup/
 FodyWeavers.xsd
 .DS_Store
 
+# Claude Code local configuration
+.claude/
+
 # Android Studio
 .gradle/
 .idea/
