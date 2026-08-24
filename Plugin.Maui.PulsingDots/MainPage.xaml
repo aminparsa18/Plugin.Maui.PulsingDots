@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Plugin.Maui.PulsingDots.Controls"
+             x:Class="Plugin.Maui.PulsingDots.MainPage"
+             Title="PulsingDots">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="28">
+
+            <VerticalStackLayout Spacing="4">
+                <Label Text="PulsingDots" FontSize="26" FontAttributes="Bold" />
+                <Label Text="Pure MAUI: Shape + Animation only — no handler, no Platforms/ code, no MauiProgram registration. Drop it into any project and it just works."
+                       FontSize="14" TextColor="Gray" />
+            </VerticalStackLayout>
+
+            <!-- 1. Plain control, toggled on/off -->
+            <Border StrokeShape="RoundRectangle 14" Stroke="LightGray" StrokeThickness="1" Padding="18">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Basic" FontAttributes="Bold" FontSize="16" />
+                    <HorizontalStackLayout Spacing="16" VerticalOptions="Center">
+                        <controls:PulsingDots x:Name="BasicDots" DotColor="#5B80C1" IsRunning="True" />
+                        <Button x:Name="ToggleButton" Text="Stop" Clicked="OnToggleClicked" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- 2. Color variants — same control, just a different bound color each time -->
+            <Border StrokeShape="RoundRectangle 14" Stroke="LightGray" StrokeThickness="1" Padding="18">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Color variants" FontAttributes="Bold" FontSize="16" />
+                    <HorizontalStackLayout Spacing="24" VerticalOptions="Center">
+                        <controls:PulsingDots DotColor="#5B80C1" IsRunning="True" />
+                        <controls:PulsingDots DotColor="#3FA9A0" IsRunning="True" />
+                        <controls:PulsingDots DotColor="#E0A339" IsRunning="True" />
+                        <controls:PulsingDots DotColor="#D9738F" IsRunning="True" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- 3. Real-world pattern: swapped in place of a status chip's label while it loads.
+                 Ported from TimesheetsDashboardView's week-status chip in the source app. -->
+            <Border StrokeShape="RoundRectangle 14" Stroke="LightGray" StrokeThickness="1" Padding="18">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Status-chip swap" FontAttributes="Bold" FontSize="16" />
+                    <Label Text="Tap to simulate a status refresh — the chip shows PulsingDots instead of flashing stale text while it 'loads'."
+                           FontSize="13" TextColor="Gray" />
+
+                    <Border StrokeShape="RoundRectangle 20" BackgroundColor="#E7EEFB" Padding="14,8" HorizontalOptions="Start">
+                        <Grid>
+                            <controls:PulsingDots x:Name="ChipDots" DotColor="#3E5A94" IsRunning="False"
+                                                   IsVisible="False" VerticalOptions="Center" />
+                            <HorizontalStackLayout x:Name="ChipLabelStack" Spacing="6" VerticalOptions="Center">
+                                <Ellipse WidthRequest="8" HeightRequest="8" Fill="#3FA9A0" VerticalOptions="Center" />
+                                <Label x:Name="ChipLabel" Text="Approved" TextColor="#1E2233" FontAttributes="Bold" FontSize="13" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <Button Text="Simulate refresh" Clicked="OnSimulateRefreshClicked" HorizontalOptions="Start" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
